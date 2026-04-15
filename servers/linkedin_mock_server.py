@@ -106,9 +106,20 @@ def _derive_seniority(title: str) -> str:
 
 
 # ---------------------------------------------------------------------------
-# Coarse keyword filter (Layer 1)
-# Layer 2 — signal identification — is done by the Hunter agent
+# Coarse pre-filters (Layer 1)
+# Layer 2 — fine signal identification — is done by the Hunter agent
 # ---------------------------------------------------------------------------
+
+# Employers to exclude at source — no point sending these to the Hunter.
+# The Qualifier's validate_lead guardrail is a safety net for edge cases
+# (e.g. someone who recently joined DataStax and profile isn't updated yet).
+_EXCLUDED_EMPLOYERS = {"datastax", "ibm datastax", "ibm"}
+
+
+def _is_competitor_employee(profile: dict) -> bool:
+    company = (profile.get("company") or "").lower().strip()
+    return company in _EXCLUDED_EMPLOYERS
+
 
 def _keyword_match(profile: dict, keywords: list[str]) -> bool:
     searchable = " ".join([
@@ -174,11 +185,18 @@ def search_linkedin_profiles(query: str = "") -> str:
 
     raw_profiles = _load_profiles()
     normalized = [normalize(p) for p in raw_profiles]
-    filtered = [p for p in normalized if _keyword_match(p, keywords)]
+
+    keyword_matched = [p for p in normalized if _keyword_match(p, keywords)]
+    filtered = [p for p in keyword_matched if not _is_competitor_employee(p)]
+
+    excluded_count = len(keyword_matched) - len(filtered)
 
     print(
         f"[linkedin-server] query='{query}'\n"
-        f"  {len(raw_profiles)} total → {len(filtered)} passed keyword filter",
+        f"  {len(raw_profiles)} total"
+        f" → {len(keyword_matched)} keyword match"
+        f" → {excluded_count} competitor employees removed"
+        f" → {len(filtered)} returned to Hunter",
         file=sys.stderr,
     )
 

@@ -13,7 +13,8 @@
       "Bash(/Users/gal.kol/Documents/leads-hunter/.venv/bin/pip install:*)",
       "Bash(timeout 3 .venv/bin/python mcp/linkedin_mock_server.py)",
       "Bash(gtimeout 3 .venv/bin/python mcp/linkedin_mock_server.py)",
-      "Bash(echo \"exit: $?\")"
+      "Bash(echo \"exit: $?\")",
+      "Bash(.venv/bin/python -c ' *)"
     ]
   }
 }

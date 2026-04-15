@@ -1,11 +1,7 @@
-# main.py
-# Entry point. Run with: python main.py
-# Always operates in dry-run mode (DRY_RUN=true in .env).
-# No real messages are ever sent.
-
 import os
 from dotenv import load_dotenv
 from rich.console import Console
+from database import init_db
 from crew import build_crew
 
 load_dotenv()
@@ -14,10 +10,14 @@ console = Console()
 
 def main():
     console.rule("[bold cyan]Leads Hunter — Dry Run[/bold cyan]")
-    console.print(f"[dim]DRY_RUN={os.getenv('DRY_RUN', 'true')}[/dim]\n")
+    console.print(f"[dim]DRY_RUN={os.getenv('DRY_RUN', 'true')}  "
+                  f"DEV_MODE={os.getenv('DEV_MODE', 'true')}[/dim]\n")
 
-    crew = build_crew()
-    result = crew.kickoff()
+    init_db()
+
+    mcp_adapter, crew = build_crew()
+    with mcp_adapter:
+        result = crew.kickoff()
 
     console.rule("[bold green]Run Complete[/bold green]")
     console.print(result)

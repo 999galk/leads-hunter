@@ -4,6 +4,7 @@
 # an assigned agent, and optional context (previous task outputs it can read).
 
 from crewai import Task
+from models import HunterOutput, QualifierOutput, CopywriterOutput, EvaluatorOutput
 
 
 def create_tasks(agents: dict) -> list[Task]:
@@ -31,9 +32,11 @@ def create_tasks(agents: dict) -> list[Task]:
             "Return a list of profiles, each annotated with the signals found."
         ),
         expected_output=(
-            "A list of candidate profiles. Each entry must include: name, title, company, "
-            "linkedin_url, and a 'signals' list of strings describing what was found."
+            "A HunterOutput object containing a list of DiscoveredProfile entries. "
+            "Each profile must have tier1_signals and tier2_signals populated with "
+            "specific strings describing what was found. Empty lists if no signals."
         ),
+        output_pydantic=HunterOutput,
         agent=agents["hunter"],
     )
 
@@ -56,10 +59,11 @@ def create_tasks(agents: dict) -> list[Task]:
             "or BLOCKED (guardrail hit)."
         ),
         expected_output=(
-            "A list of leads with: name, title, company, linkedin_url, signals, status "
-            "(QUALIFIED/SKIPPED/BLOCKED), final_score (0-100), and qualification_notes "
-            "explaining the scoring decision."
+            "A QualifierOutput object with every lead classified. "
+            "Each QualifiedLead must have status (QUALIFIED/BLOCKED/SKIPPED), "
+            "a score (0-100), and qualification_notes explaining the decision."
         ),
+        output_pydantic=QualifierOutput,
         agent=agents["qualifier"],
         context=[discovery_task],
     )
