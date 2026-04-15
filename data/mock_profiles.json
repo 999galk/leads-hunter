@@ -1,0 +1,363 @@
+[
+  {
+    "id": "p001",
+    "first_name": "Sarah",
+    "last_name": "Chen",
+    "title": "Senior Backend Engineer",
+    "seniority": "senior",
+    "headline": "Building distributed systems at Netflix | Apache Cassandra & DataStax",
+    "linkedin_url": "https://linkedin.com/in/sarah-chen-backend",
+    "email": "s.chen@netflix.com",
+    "city": "Los Gatos",
+    "country": "United States",
+    "organization_name": "Netflix",
+    "organization": {
+      "name": "Netflix",
+      "industry": "Media & Streaming",
+      "num_employees": 12000
+    },
+    "technologies": ["Apache Cassandra", "DataStax", "Kubernetes", "Python", "Java"],
+    "employment_history": [
+      {
+        "company_name": "Netflix",
+        "title": "Senior Backend Engineer",
+        "current": true,
+        "description": "Designed and scaled Cassandra clusters on DataStax Enterprise for recommendation pipeline handling 500K req/s."
+      }
+    ],
+    "certifications": [],
+    "recent_posts": [
+      "Exploring migration options after the IBM acquisition news... anyone else re-evaluating their DataStax dependency? #datastax #cassandra"
+    ]
+  },
+  {
+    "id": "p002",
+    "first_name": "Marcus",
+    "last_name": "Williams",
+    "title": "Principal Data Engineer",
+    "seniority": "senior",
+    "headline": "Principal Data Engineer at Stripe — distributed systems, CQL, real-time pipelines",
+    "linkedin_url": "https://linkedin.com/in/marcus-williams-data",
+    "email": "m.williams@stripe.com",
+    "city": "San Francisco",
+    "country": "United States",
+    "organization_name": "Stripe",
+    "organization": {
+      "name": "Stripe",
+      "industry": "Fintech",
+      "num_employees": 7000
+    },
+    "technologies": ["DataStax Enterprise", "CQL", "Apache Kafka", "Python", "Go"],
+    "employment_history": [
+      {
+        "company_name": "Stripe",
+        "title": "Principal Data Engineer",
+        "current": true,
+        "description": "Led migration of payments ledger to DataStax Enterprise — 3B rows, 99.999% uptime requirement."
+      }
+    ],
+    "certifications": [],
+    "recent_posts": []
+  },
+  {
+    "id": "p003",
+    "first_name": "Priya",
+    "last_name": "Patel",
+    "title": "Platform Engineer",
+    "seniority": "mid",
+    "headline": "Platform Engineer @ Riot Games | Cloud infra, Astra DB, NoSQL",
+    "linkedin_url": "https://linkedin.com/in/priya-patel-platform",
+    "email": "priya.patel@riotgames.com",
+    "city": "Los Angeles",
+    "country": "United States",
+    "organization_name": "Riot Games",
+    "organization": {
+      "name": "Riot Games",
+      "industry": "Gaming",
+      "num_employees": 5000
+    },
+    "technologies": ["Astra DB", "NoSQL", "Kubernetes", "Terraform", "Python"],
+    "employment_history": [
+      {
+        "company_name": "Riot Games",
+        "title": "Platform Engineer",
+        "current": true,
+        "description": "Runs player state and matchmaking data on DataStax Astra DB across 3 regions."
+      }
+    ],
+    "certifications": [],
+    "recent_posts": []
+  },
+  {
+    "id": "p004",
+    "first_name": "David",
+    "last_name": "Park",
+    "title": "Staff Software Engineer",
+    "seniority": "senior",
+    "headline": "Staff Engineer @ Booking.com | Distributed databases, Apache Cassandra",
+    "linkedin_url": "https://linkedin.com/in/david-park-eng",
+    "email": "d.park@booking.com",
+    "city": "Amsterdam",
+    "country": "Netherlands",
+    "organization_name": "Booking.com",
+    "organization": {
+      "name": "Booking.com",
+      "industry": "Travel & E-commerce",
+      "num_employees": 18000
+    },
+    "technologies": ["Apache Cassandra", "DataStax", "Java", "PostgreSQL"],
+    "employment_history": [
+      {
+        "company_name": "Booking.com",
+        "title": "Staff Software Engineer",
+        "current": true,
+        "description": "Owns the availability and pricing data layer built on Apache Cassandra with DataStax drivers."
+      }
+    ],
+    "certifications": [
+      "DataStax Academy — Apache Cassandra Developer Associate (2023)"
+    ],
+    "recent_posts": []
+  },
+  {
+    "id": "p005",
+    "first_name": "Sofia",
+    "last_name": "Martinez",
+    "title": "Data Platform Lead",
+    "seniority": "manager",
+    "headline": "Data Platform Lead @ Spotify | Cassandra, AstraDB, vector search",
+    "linkedin_url": "https://linkedin.com/in/sofia-martinez-data",
+    "email": "sofia.m@spotify.com",
+    "city": "Stockholm",
+    "country": "Sweden",
+    "organization_name": "Spotify",
+    "organization": {
+      "name": "Spotify",
+      "industry": "Media & Streaming",
+      "num_employees": 9000
+    },
+    "technologies": ["Apache Cassandra", "Astra DB", "Python", "dbt"],
+    "employment_history": [
+      {
+        "company_name": "Spotify",
+        "title": "Data Platform Lead",
+        "current": true,
+        "description": "Owns the data platform including Cassandra-backed event store and Astra DB vector search layer."
+      }
+    ],
+    "certifications": [],
+    "recent_posts": [
+      "Just shipped our vector search feature on Astra DB — latency is... acceptable. Would love to hear how others handle this at scale. #astradb #datastax",
+      "Our Cassandra cluster is now the single biggest cost center in our infra. Time to evaluate alternatives. #cassandra"
+    ]
+  },
+  {
+    "id": "p006",
+    "first_name": "Ryan",
+    "last_name": "O'Brien",
+    "title": "Senior Software Engineer",
+    "seniority": "senior",
+    "headline": "Senior SWE @ Capital One | Fraud detection, DataStax Enterprise, real-time systems",
+    "linkedin_url": "https://linkedin.com/in/ryan-obrien-eng",
+    "email": "r.obrien@capitalone.com",
+    "city": "McLean",
+    "country": "United States",
+    "organization_name": "Capital One",
+    "organization": {
+      "name": "Capital One",
+      "industry": "Fintech / Banking",
+      "num_employees": 55000
+    },
+    "technologies": ["DataStax Enterprise", "Apache Cassandra", "Java", "Spark"],
+    "employment_history": [
+      {
+        "company_name": "Capital One",
+        "title": "Senior Software Engineer",
+        "current": true,
+        "description": "Real-time fraud detection pipeline on DataStax Enterprise, processing 2M transactions/day."
+      }
+    ],
+    "certifications": [],
+    "recent_posts": []
+  },
+  {
+    "id": "p007",
+    "first_name": "Lisa",
+    "last_name": "Zhang",
+    "title": "Cloud Architect",
+    "seniority": "senior",
+    "headline": "Cloud Architect @ Walmart Labs | Cassandra, cloud-native infra",
+    "linkedin_url": "https://linkedin.com/in/lisa-zhang-cloud",
+    "email": "l.zhang@walmart.com",
+    "city": "Sunnyvale",
+    "country": "United States",
+    "organization_name": "Walmart Labs",
+    "organization": {
+      "name": "Walmart Labs",
+      "industry": "Retail",
+      "num_employees": 15000
+    },
+    "technologies": ["Apache Cassandra", "CQL", "AWS", "Terraform"],
+    "employment_history": [
+      {
+        "company_name": "Walmart Labs",
+        "title": "Cloud Architect",
+        "current": true,
+        "description": "Designed cloud-native data infrastructure including Cassandra clusters on DataStax Enterprise."
+      }
+    ],
+    "certifications": [],
+    "recent_posts": [
+      "We're mid-migration off DataStax Enterprise — the IBM acquisition changed our vendor risk calculus. Happy to share learnings."
+    ]
+  },
+  {
+    "id": "p008",
+    "first_name": "Aisha",
+    "last_name": "Johnson",
+    "title": "Director of Engineering",
+    "seniority": "director",
+    "headline": "Director of Engineering @ DoorDash | Real-time logistics, data infrastructure",
+    "linkedin_url": "https://linkedin.com/in/aisha-johnson-eng",
+    "email": "a.johnson@doordash.com",
+    "city": "San Francisco",
+    "country": "United States",
+    "organization_name": "DoorDash",
+    "organization": {
+      "name": "DoorDash",
+      "industry": "Food Delivery / Logistics",
+      "num_employees": 8000
+    },
+    "technologies": ["Apache Cassandra", "DataStax", "Kafka", "Go"],
+    "employment_history": [
+      {
+        "company_name": "DoorDash",
+        "title": "Director of Engineering",
+        "current": true,
+        "description": "Leads the real-time order routing and data infrastructure teams, including our DataStax-based event store."
+      }
+    ],
+    "certifications": [],
+    "recent_posts": [
+      "Our real-time order routing stack runs on DataStax. With the IBM acquisition I'm getting questions from the board about long-term vendor strategy."
+    ]
+  },
+  {
+    "id": "p009",
+    "first_name": "James",
+    "last_name": "Rodriguez",
+    "title": "Solutions Architect",
+    "seniority": "senior",
+    "headline": "Solutions Architect @ DataStax | Helping teams get the most out of Cassandra & Astra DB",
+    "linkedin_url": "https://linkedin.com/in/james-rodriguez-datastax",
+    "email": "james.rodriguez@datastax.com",
+    "city": "Austin",
+    "country": "United States",
+    "organization_name": "DataStax",
+    "organization": {
+      "name": "DataStax",
+      "industry": "Database / Cloud",
+      "num_employees": 600
+    },
+    "technologies": ["DataStax Enterprise", "Astra DB", "Apache Cassandra", "CQL"],
+    "employment_history": [
+      {
+        "company_name": "DataStax",
+        "title": "Solutions Architect",
+        "current": true,
+        "description": "Customer-facing architect helping enterprises adopt DataStax Enterprise and Astra DB."
+      }
+    ],
+    "certifications": [
+      "DataStax Academy — Cassandra Administrator Professional"
+    ],
+    "recent_posts": []
+  },
+  {
+    "id": "p010",
+    "first_name": "Emma",
+    "last_name": "Thompson",
+    "title": "Senior Software Engineer",
+    "seniority": "senior",
+    "headline": "Senior SWE @ IBM DataStax | Distributed systems, Astra DB",
+    "linkedin_url": "https://linkedin.com/in/emma-thompson-ibm",
+    "email": "emma.thompson@ibm.com",
+    "city": "New York",
+    "country": "United States",
+    "organization_name": "IBM DataStax",
+    "organization": {
+      "name": "IBM DataStax",
+      "industry": "Database / Cloud",
+      "num_employees": 300000
+    },
+    "technologies": ["Astra DB", "Apache Cassandra", "Java", "Kubernetes"],
+    "employment_history": [
+      {
+        "company_name": "IBM DataStax",
+        "title": "Senior Software Engineer",
+        "current": true,
+        "description": "Core engineering team for Astra DB serverless product."
+      }
+    ],
+    "certifications": [],
+    "recent_posts": []
+  },
+  {
+    "id": "p011",
+    "first_name": "Tom",
+    "last_name": "Nguyen",
+    "title": "Junior Backend Developer",
+    "seniority": "entry",
+    "headline": "Junior Developer @ TechStart | Python, REST APIs",
+    "linkedin_url": "https://linkedin.com/in/tom-nguyen-dev",
+    "email": "tom@techstart.io",
+    "city": "Austin",
+    "country": "United States",
+    "organization_name": "TechStart Inc.",
+    "organization": {
+      "name": "TechStart Inc.",
+      "industry": "SaaS Startup",
+      "num_employees": 25
+    },
+    "technologies": ["Python", "Django", "PostgreSQL"],
+    "employment_history": [
+      {
+        "company_name": "TechStart Inc.",
+        "title": "Junior Backend Developer",
+        "current": true,
+        "description": "Building REST APIs and internal tooling."
+      }
+    ],
+    "certifications": [],
+    "recent_posts": []
+  },
+  {
+    "id": "p012",
+    "first_name": "Kevin",
+    "last_name": "Moore",
+    "title": "Backend Developer",
+    "seniority": "mid",
+    "headline": "Backend Developer @ FinanceFlow | MySQL, Redis, microservices",
+    "linkedin_url": "https://linkedin.com/in/kevin-moore-backend",
+    "email": "k.moore@financeflow.com",
+    "city": "Chicago",
+    "country": "United States",
+    "organization_name": "FinanceFlow",
+    "organization": {
+      "name": "FinanceFlow",
+      "industry": "Fintech",
+      "num_employees": 120
+    },
+    "technologies": ["PostgreSQL", "Redis", "MySQL", "Node.js"],
+    "employment_history": [
+      {
+        "company_name": "FinanceFlow",
+        "title": "Backend Developer",
+        "current": true,
+        "description": "Building payment processing APIs on a PostgreSQL/Redis stack."
+      }
+    ],
+    "certifications": [],
+    "recent_posts": []
+  }
+]

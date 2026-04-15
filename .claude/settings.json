@@ -1,0 +1,19 @@
+{
+  "permissions": {
+    "allow": [
+      "WebSearch",
+      "Bash(python3 database.py)",
+      "Bash(python3 -c ':*)",
+      "Bash(pip3 install:*)",
+      "Bash(python3 -m venv .venv)",
+      "Bash(wait)",
+      "Bash(.venv/bin/python -c ':*)",
+      "Bash(/Users/gal.kol/Documents/leads-hunter/.venv/bin/pip show:*)",
+      "Bash(/Users/gal.kol/Documents/leads-hunter/.venv/bin/pip list:*)",
+      "Bash(/Users/gal.kol/Documents/leads-hunter/.venv/bin/pip install:*)",
+      "Bash(timeout 3 .venv/bin/python mcp/linkedin_mock_server.py)",
+      "Bash(gtimeout 3 .venv/bin/python mcp/linkedin_mock_server.py)",
+      "Bash(echo \"exit: $?\")"
+    ]
+  }
+}
