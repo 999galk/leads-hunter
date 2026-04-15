@@ -17,6 +17,17 @@ from mcp.server.fastmcp import FastMCP
 
 _ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 _PROFILES_PATH = os.path.join(_ROOT, "data", "mock_profiles.json")
+_CLIENTS_PATH  = os.path.join(_ROOT, "data", "known_datastax_clients.json")
+
+
+def _load_known_clients() -> set[str]:
+    """Load the curated DataStax client company list as a lowercase set for O(1) lookup."""
+    with open(_CLIENTS_PATH, encoding="utf-8") as f:
+        data = json.load(f)
+    return {name.lower().strip() for name in data.get("companies", [])}
+
+
+_KNOWN_DATASTAX_CLIENTS = _load_known_clients()
 
 # Apollo seniority strings → canonical tiers
 _SENIORITY_MAP = {
@@ -74,21 +85,29 @@ def normalize(raw: dict) -> dict:
         or _derive_seniority(raw.get("title") or "")
     )
 
+    company_name = raw.get("organization_name") or org.get("name") or "Unknown"
+
+    # True when the company is a known DataStax client from curated case studies.
+    # In production this field comes from Apollo's 'technologies_used' filter instead
+    # of this static lookup — no code change needed downstream.
+    known_client = company_name.lower().strip() in _KNOWN_DATASTAX_CLIENTS
+
     return {
-        "id":             raw.get("id", ""),
-        "name":           name,
-        "title":          raw.get("title") or "",
-        "company":        raw.get("organization_name") or org.get("name") or "Unknown",
-        "linkedin_url":   raw.get("linkedin_url") or "",
-        "email":          raw.get("email") or "",
-        "location":       f"{raw.get('city', '')} {raw.get('country', '')}".strip(),
-        "seniority":      seniority,
-        "industry":       org.get("industry") or "Unknown",
-        "company_size":   str(org.get("num_employees") or "Unknown"),
-        "technologies":   technologies,
-        "raw_experience": raw_experience,
-        "recent_posts":   recent_posts,
-        "certifications": raw.get("certifications") or [],
+        "id":                    raw.get("id", ""),
+        "name":                  name,
+        "title":                 raw.get("title") or "",
+        "company":               company_name,
+        "linkedin_url":          raw.get("linkedin_url") or "",
+        "email":                 raw.get("email") or "",
+        "location":              f"{raw.get('city', '')} {raw.get('country', '')}".strip(),
+        "seniority":             seniority,
+        "industry":              org.get("industry") or "Unknown",
+        "company_size":          str(org.get("num_employees") or "Unknown"),
+        "technologies":          technologies,
+        "raw_experience":        raw_experience,
+        "recent_posts":          recent_posts,
+        "certifications":        raw.get("certifications") or [],
+        "known_datastax_client": known_client,
     }
 
 

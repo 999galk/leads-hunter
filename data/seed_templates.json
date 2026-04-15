@@ -1,0 +1,82 @@
+[
+  {
+    "id": "seed_001",
+    "message_type": "linkedin_invite",
+    "approach": "performance_cost",
+    "industry": "Fintech",
+    "seniority": "senior",
+    "content": "3B rows on DSE with a 99.999% SLA is no joke. Curious what your p99 tail latency looks like under write bursts — teams I work with in similar positions have cut node count by 60%+ without touching a line of application code. Worth a quick exchange?",
+    "response_type": "replied",
+    "eval_score": 88
+  },
+  {
+    "id": "seed_002",
+    "message_type": "email",
+    "approach": "performance_cost",
+    "industry": "Fintech",
+    "seniority": "senior",
+    "content": "Subject: Your payments ledger — a node count comparison worth 15 minutes\n\nSaw your work scaling a payments ledger on DataStax Enterprise at 99.999% uptime — that's a hard constraint to build around.\n\nWe've been working with fintech teams running similar workloads who've moved to ScyllaDB. The pattern is consistent: same CQL queries, same drivers, same SSTables — but 60-70% fewer nodes and p99 latency cut roughly in half under burst traffic.\n\nNo rewrite. The application doesn't know it moved.\n\nIf you're ever stress-testing alternatives or just want to see the benchmark data side by side, happy to share. No pitch deck — just the numbers.\n\n[Name] @ ScyllaDB",
+    "response_type": "replied",
+    "eval_score": 91
+  },
+  {
+    "id": "seed_003",
+    "message_type": "linkedin_invite",
+    "approach": "migration_simplicity",
+    "industry": "Gaming",
+    "seniority": "mid",
+    "content": "Running player state on Astra DB across 3 regions is a solid architecture. If your team ever evaluates alternatives, the CQL compatibility story is surprisingly clean — same drivers, same queries, zero application changes. Happy to share what that looks like in practice.",
+    "response_type": "accepted",
+    "eval_score": 82
+  },
+  {
+    "id": "seed_004",
+    "message_type": "email",
+    "approach": "migration_simplicity",
+    "industry": "Gaming",
+    "seniority": "mid",
+    "content": "Subject: Player state migration — what 'zero application changes' actually means\n\nYour matchmaking and player state setup on Astra DB across 3 regions looks well thought out. Migrating a stack like that usually feels risky — which is why most teams don't, even when the economics argue for it.\n\nScyllaDB is fully CQL-compatible: same query syntax, same drivers (DataStax Java/Python drivers work unchanged), same SSTable format for existing data. We've seen gaming teams complete a full migration in a single sprint with no application code changes.\n\nThe main thing that moves is the node count — usually down by 3-4x — and the p99 latency under concurrent game session load.\n\nIf a low-friction evaluation is interesting to you, I can walk you through exactly what it looks like. Takes about 20 minutes.\n\n[Name] @ ScyllaDB",
+    "response_type": "replied",
+    "eval_score": 85
+  },
+  {
+    "id": "seed_005",
+    "message_type": "linkedin_invite",
+    "approach": "acquisition_uncertainty",
+    "industry": "Media & Streaming",
+    "seniority": "senior",
+    "content": "Your post about re-evaluating the DataStax dependency resonated — a lot of teams are asking the same questions right now. Happy to share what we're seeing from companies that have already made the switch, if useful.",
+    "response_type": "replied",
+    "eval_score": 84
+  },
+  {
+    "id": "seed_006",
+    "message_type": "email",
+    "approach": "acquisition_uncertainty",
+    "industry": "Media & Streaming",
+    "seniority": "senior",
+    "content": "Subject: DataStax renewal timing — what teams are doing right now\n\nYour Cassandra cluster being the biggest cost center in your infra is a real problem, and IBM's first round of post-acquisition renewals has made it worse for most teams.\n\nA handful of streaming companies have moved to ScyllaDB in the last 6 months specifically because the IBM acquisition changed their vendor risk calculus. The migration is technically straightforward — CQL-compatible, same drivers, no application changes — and the cost reduction is meaningful at your scale.\n\nI won't pretend the timing isn't relevant: teams that evaluate before their next renewal have more leverage than those who wait.\n\nWorth 20 minutes to see the numbers? Happy to pull comps from similar streaming workloads.\n\n[Name] @ ScyllaDB",
+    "response_type": "replied",
+    "eval_score": 87
+  },
+  {
+    "id": "seed_007",
+    "message_type": "linkedin_invite",
+    "approach": "vendor_independence",
+    "industry": "Food Delivery / Logistics",
+    "seniority": "executive",
+    "content": "Board questions about long-term vendor strategy on your DataStax stack are coming up more often right now — you're not alone. The open-source alternative with no IBM dependency is a conversation more engineering leaders are having. Happy to share what that looks like at your scale.",
+    "response_type": "accepted",
+    "eval_score": 80
+  },
+  {
+    "id": "seed_008",
+    "message_type": "email",
+    "approach": "vendor_independence",
+    "industry": "Food Delivery / Logistics",
+    "seniority": "executive",
+    "content": "Subject: Vendor strategy on your real-time data stack — the open-source option\n\nBoard questions about long-term vendor exposure on a DataStax-backed stack are coming up more often since the IBM acquisition. It's a reasonable thing to pressure-test.\n\nScyllaDB is Apache 2.0 licensed, community-governed, and not owned by a cloud provider. For teams running real-time order routing at scale, that's become a meaningful part of the evaluation — not just the performance numbers.\n\nThe technical migration from DataStax to ScyllaDB is straightforward: CQL-compatible, same drivers, existing data files transfer without conversion. The operational risk is low.\n\nIf it's useful context for your vendor review, I can put together a one-pager on how other logistics teams have framed this decision. No commitment needed.\n\n[Name] @ ScyllaDB",
+    "response_type": "replied",
+    "eval_score": 83
+  }
+]

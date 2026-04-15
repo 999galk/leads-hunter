@@ -48,8 +48,8 @@ def _size_score(company_size: str) -> int:
 
 @tool("Calculate Lead Score")
 def calculate_lead_score(
-    tier1_signals: list,
-    tier2_signals: list,
+    tier1_signals: list[str],
+    tier2_signals: list[str],
     seniority: str,
     industry: str,
     company_size: str,

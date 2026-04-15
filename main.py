@@ -15,8 +15,8 @@ def main():
 
     init_db()
 
-    mcp_adapter, crew = build_crew()
-    with mcp_adapter:
+    linkedin_adapter, sqlite_adapter, crew = build_crew()
+    with linkedin_adapter, sqlite_adapter:
         result = crew.kickoff()
 
     console.rule("[bold green]Run Complete[/bold green]")

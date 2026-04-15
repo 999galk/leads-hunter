@@ -74,6 +74,17 @@ class LeadMessages(BaseModel):
     linkedin_invite: str = Field(description="Max 300 characters")
     email_subject:  str
     email_body:     str
+    approach:       Literal[
+        "acquisition_uncertainty",  # IBM roadmap risk, pricing, post-acquisition uncertainty
+        "performance_cost",         # Node reduction, latency benchmarks, cloud spend savings
+        "migration_simplicity",     # CQL compatibility, zero driver changes, SSTable format
+        "vendor_independence",      # Open source, no lock-in, community-driven roadmap
+    ] = Field(
+        description=(
+            "The primary angle used to write this lead's messages. "
+            "Used by the self-improvement loop to track which approaches get replies."
+        )
+    )
 
 
 class CopywriterOutput(BaseModel):

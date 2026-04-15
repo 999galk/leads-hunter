@@ -3,6 +3,7 @@
 # Each task has a description (what to do), expected_output (what to return),
 # an assigned agent, and optional context (previous task outputs it can read).
 
+import os
 from crewai import Task
 from models import HunterOutput, QualifierOutput, CopywriterOutput, EvaluatorOutput
 
@@ -26,7 +27,8 @@ def create_tasks(agents: dict) -> list[Task]:
             "For each profile, identify which DataStax signals are present:\n"
             "  Tier 1 (high confidence): skills like 'Apache Cassandra', 'DataStax', "
             "'Astra DB', 'DataStax Enterprise', 'CQL'; experience mentioning DataStax "
-            "at a non-DataStax company; DataStax Academy certifications.\n"
+            "at a non-DataStax company; DataStax Academy certifications; "
+            "known_datastax_client=true in the profile (company is a confirmed DataStax customer).\n"
             "  Tier 2 (moderate): LinkedIn posts with #datastax / #astradb / #cassandra; "
             "mentions of migrating from Cassandra or DataStax.\n"
             "Return a list of profiles, each annotated with the signals found."
@@ -77,20 +79,30 @@ def create_tasks(agents: dict) -> list[Task]:
     copywriting_task = Task(
         description=(
             "For each QUALIFIED lead from the qualification task, write two messages:\n"
-            "1. LinkedIn invite: max 300 characters. Must feel personal, not templated. "
-            "Reference at least one specific signal from the lead's profile.\n"
+            "1. LinkedIn invite: max 300 characters. Personal, not templated. "
+            "Reference at least one specific signal from the lead's profile. "
+            "Do NOT mention ScyllaDB by name — keep it curiosity-driven.\n"
             "2. Follow-up email: 100-200 words. Subject line + body.\n\n"
-            "Before writing, call search_recent_news twice:\n"
-            "  - search_recent_news('DataStax IBM') to find pain signals "
-            "(acquisition uncertainty, pricing, roadmap changes)\n"
-            "  - search_recent_news('ScyllaDB') to find value signals "
-            "(performance wins, new features, customer stories)\n"
-            "Weave relevant findings into the messages naturally."
+            "Before writing each message set, follow this order:\n"
+            "1. Call get_successful_templates with the lead's industry, seniority, "
+            "and message_type to retrieve past high-performing examples. "
+            "Use them as tone and structure references — do not copy.\n"
+            "2. Call search_recent_news('DataStax IBM') to get current DataStax/IBM news.\n"
+            "3. Call search_recent_news('ScyllaDB') to get current ScyllaDB news.\n\n"
+            "For each lead, choose the outreach angle that best fits their profile "
+            "and what the news is showing. Available angles:\n"
+            "  - acquisition_uncertainty: IBM roadmap risk, pricing, post-acquisition disruption\n"
+            "  - performance_cost: node reduction, latency, infrastructure savings\n"
+            "  - migration_simplicity: CQL/driver/SSTable compatibility, zero rewrite\n"
+            "  - vendor_independence: open source, no lock-in, community roadmap\n\n"
+            "Record the chosen angle in the 'approach' field of each LeadMessages output."
         ),
         expected_output=(
-            "For each qualified lead: name, linkedin_invite (string), "
-            "followup_email (dict with 'subject' and 'body' keys)."
+            "A CopywriterOutput with one LeadMessages entry per qualified lead. "
+            "Each entry must include: lead_id, lead_name, linkedin_invite (<300 chars), "
+            "email_subject, email_body, and approach (one of the four named angles)."
         ),
+        output_pydantic=CopywriterOutput,
         agent=agents["copywriter"],
         context=[qualification_task],
     )
@@ -113,11 +125,13 @@ def create_tasks(agents: dict) -> list[Task]:
             "If score >= 70, mark as APPROVED."
         ),
         expected_output=(
-            "For each lead: linkedin_invite_score (0-100), linkedin_invite_status "
-            "(APPROVED/REJECTED), linkedin_invite_notes, followup_email_score (0-100), "
-            "followup_email_status (APPROVED/REJECTED), followup_email_notes, "
-            "and the final approved message content."
+            "An EvaluatorOutput with one EvaluatedMessage per lead. "
+            "Each entry must include scores (0-100) and status (APPROVED/REJECTED) "
+            "for both the linkedin_invite and email, plus notes explaining the decision. "
+            "Approved message content must be included verbatim."
         ),
+        output_pydantic=EvaluatorOutput,
+        human_input=os.getenv("HUMAN_REVIEW", "true").lower() == "true",
         agent=agents["evaluator"],
         context=[copywriting_task],
     )

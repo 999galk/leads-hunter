@@ -16,15 +16,38 @@ Steps completed:
 - ✅ Step 3: LinkedIn MCP server (`servers/linkedin_mock_server.py`) with Apollo-shaped mock data and two-layer filtering
 - ✅ Step 4: Hunter agent (`agents/hunter.py`) + shared Pydantic models (`models.py`) + MCP lifecycle in `crew.py`
 - ✅ Step 5: Qualifier agent (`agents/qualifier.py`) + three tools (`tools/validate_lead.py`, `tools/calculate_lead_score.py`, `tools/get_company_profile.py`)
+- ✅ Step 6: Copywriter agent (`agents/copywriter.py`) + `tools/search_recent_news.py` + `tools/get_successful_templates.py` stub + 4 named approaches + `approach` field on `LeadMessages`
+- ✅ Step 7: RAG setup — `rag.py` (ChromaDB persistent store), `data/seed_templates.json` (8 seed messages), `tools/get_successful_templates.py`, `message_feedback` table in DB
+- ✅ Step 8: Evaluator agent (`agents/evaluator.py`) + `HUMAN_REVIEW` toggle on evaluation task (default `true`)
+- ✅ Step 9: Reporter agent (`agents/reporter.py`) + official `mcp-server-sqlite` via `uvx` (replaces custom server) + `tools/log_dry_run.py`
+- ✅ Step 10: `ingest_feedback.py` — three modes: process pending, `--add` (interactive), `--status`
+- ✅ Step 11: End-to-end wiring verified — all imports clean, both MCP servers start, all 5 agents + 5 tasks wired correctly
 
 Steps pending:
-- Step 6: Copywriter agent + `search_recent_news` tool
-- Step 7: RAG setup — ChromaDB, `get_successful_templates` tool, seed data, `message_feedback` DB table
-- Step 8: Evaluator agent + `HUMAN_REVIEW` toggle
-- Step 9: Reporter agent + SQLite MCP + dry run log
-- Step 10: `ingest_feedback.py` (closes self-improvement loop)
-- Step 11: `main.py` end-to-end run
-- Step 12: Gradio UI (`app.py`)
+- Step 12: Gradio UI (`app.py`) — 5 tabs: Pipeline Control, Leads, Messages, Self-Improvement, Report
+
+## MCP: adapters vs. library imports
+
+An MCP server is a separate subprocess that speaks the MCP protocol over stdin/stdout (or HTTP/WebSocket for remote). `MCPServerAdapter` is the CrewAI bridge that starts that subprocess, queries it for its tool list at runtime, and routes tool calls to it during the crew run.
+
+**Lifecycle in this project:**
+- `build_crew()` creates both adapters and reads their tool lists (subprocess not yet running)
+- `with linkedin_adapter, sqlite_adapter:` starts both subprocesses
+- `crew.kickoff()` runs the pipeline with both servers live
+- `with` block exits → both subprocesses shut down cleanly
+
+**Why MCP instead of a library import:**
+1. **Language independence** — server can be Python, Node, Rust, Go; agent doesn't care
+2. **Runtime discoverability** — agent asks "what can you do?" at runtime; tools aren't hardcoded
+3. **Network transparency** — swap `StdioServerParameters` for an HTTP transport and the agent code is unchanged; same protocol whether local or remote
+4. **Swappability** — Reporter calls `write_query`; swap `mcp-server-sqlite` for `mcp-server-postgres` and no agent code changes
+
+**When a library is fine:** local, same-language, no swappability needed (e.g. `tools/validate_lead.py`).
+**When MCP earns its keep:** external data sources (LinkedIn/Apollo), off-the-shelf community servers (`mcp-server-sqlite`), or anything that may become remote in production.
+
+**Two MCP servers in this project:**
+- `linkedin_adapter` → `servers/linkedin_mock_server.py` — custom (bespoke two-layer filtering + known-client lookup). Hunter agent only.
+- `sqlite_adapter` → `uvx mcp-server-sqlite` — official community server, no custom code. Reporter agent only.
 
 ## Key architectural decisions
 
@@ -52,7 +75,7 @@ Steps pending:
 - Threshold: QUALIFIED >= 60, SKIPPED < 60, BLOCKED = guardrail hit
 - `get_company_profile` tool returns known DataStax usage + ScyllaDB fit notes per company — feeds LLM adjustment
 
-**MCP server lifecycle:** `crew.py`'s `build_crew()` returns `(mcp_adapter, crew)`. Caller uses `with mcp_adapter:` in `main.py` to keep the subprocess alive for the full crew run. Hunter agent receives tools from the adapter — does not manage lifecycle itself.
+**MCP server lifecycle:** `crew.py`'s `build_crew()` returns `(linkedin_adapter, sqlite_adapter, crew)`. Caller uses `with linkedin_adapter, sqlite_adapter:` in `main.py` to keep both subprocesses alive for the full crew run. Agents receive tools from their respective adapters — do not manage lifecycle themselves.
 
 **Folder naming:** MCP servers live in `servers/` (not `mcp/`) because `mcp/` would shadow the installed `mcp` Python package.
 
@@ -105,6 +128,42 @@ Steps pending:
 
 **Simplification calls**
 - Killed multi-provider abstraction after it was built — overkill for POC.
+
+## Known issues fixed
+- `tools/calculate_lead_score.py`: `tier1_signals` and `tier2_signals` must be typed `list[str]`, not bare `list` — OpenAI API rejects tool schemas where list items have no `type` key.
+- `mcpadapt` package must be installed (`pip install mcpadapt`) — required by `crewai-tools` MCPServerAdapter even though `mcp` is already installed.
+- `litellm` package must be installed — required for Groq model support (`groq/llama-3.3-70b-versatile`) since CrewAI doesn't support Groq natively.
+- Both are now in `requirements.txt`.
+
+## Copywriter design decisions
+- News search queries are fixed: `search_recent_news('DataStax IBM')` and `search_recent_news('ScyllaDB')`. The Copywriter reads what the news returns and picks the angle — it doesn't choose the queries.
+- Four named approaches in Copywriter backstory (not ranked): `acquisition_uncertainty`, `performance_cost`, `migration_simplicity`, `vendor_independence`. LLM picks based on lead signals + news.
+- `approach` field on `LeadMessages` (Literal type) — stored in SQLite `messages.approach` column — used by RAG metadata for self-improvement tracking.
+- LinkedIn invite must NOT name ScyllaDB — curiosity-driven only. Product name goes in the email.
+
+## Known DataStax clients list
+- `data/known_datastax_clients.json` — 35 companies from public DataStax case studies.
+- MCP server sets `known_datastax_client: bool` on each normalized profile at source.
+- Hunter emits it as Tier 1 signal: "Works at confirmed DataStax client: [company]".
+- In production: Apollo's `technologies_used` filter replaces the static list — same field, different source, no downstream changes.
+
+## RAG store
+- ChromaDB persistent store at `data/chroma_db/` using `all-MiniLM-L6-v2` embeddings (downloaded to `~/.cache/chroma/` on first run, ~80MB).
+- 8 seed templates in `data/seed_templates.json` — 2 per approach, covering fintech/gaming/media/logistics.
+- `ingest_feedback.py` grows the store after each run: `--add` records a response, default mode ingests pending feedback into ChromaDB.
+- Only `replied` and `accepted` response types are stored in ChromaDB (negative responses are recorded in SQLite only).
+
+## SQLite schema (current)
+```
+leads(id, name, title, company, linkedin_url, industry, seniority, signals,
+      discovery_source, status, score, qualification_notes, created_at)
+
+messages(id, lead_id, type, content, approach, eval_score, eval_notes,
+         eval_status, retry_count, dry_run, created_at)
+
+message_feedback(id, message_id, response_type, notes, ingested, created_at)
+```
+Migrations run automatically on every `init_db()` call — safe to call repeatedly.
 
 ## Important constraints
 - Always dry run — `DRY_RUN=true` in `.env`, never send real messages

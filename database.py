@@ -24,6 +24,8 @@ def init_db() -> None:
                 title               TEXT,
                 company             TEXT,
                 linkedin_url        TEXT,
+                industry            TEXT,
+                seniority           TEXT,
 
                 -- Discovery
                 signals             TEXT,   -- JSON array of signal strings
@@ -44,6 +46,7 @@ def init_db() -> None:
 
                 type        TEXT NOT NULL,  -- linkedin_invite | followup_email
                 content     TEXT NOT NULL,  -- full message text
+                approach    TEXT,           -- acquisition_uncertainty | performance_cost | migration_simplicity | vendor_independence
 
                 -- Evaluation
                 eval_score  INTEGER,        -- 0-100
@@ -56,7 +59,36 @@ def init_db() -> None:
 
                 created_at  TEXT DEFAULT (datetime('now'))
             );
+
+            CREATE TABLE IF NOT EXISTS message_feedback (
+                id            INTEGER PRIMARY KEY AUTOINCREMENT,
+                message_id    INTEGER NOT NULL REFERENCES messages(id),
+
+                -- Response captured from CRM / webhook / manual entry (ingest_feedback.py)
+                response_type TEXT NOT NULL,
+                    -- replied | accepted | ignored | rejected
+
+                -- Optional free-text note (e.g. "Lead asked for a demo")
+                notes         TEXT,
+
+                -- Whether this record has been ingested into ChromaDB yet
+                ingested      INTEGER DEFAULT 0,
+
+                created_at    TEXT DEFAULT (datetime('now'))
+            );
         """)
+
+        # Migrations — safe to run repeatedly (ALTER TABLE is a no-op if column exists)
+        _add_column_if_missing(conn, "messages", "approach",  "TEXT")
+        _add_column_if_missing(conn, "leads",    "industry",  "TEXT")
+        _add_column_if_missing(conn, "leads",    "seniority", "TEXT")
+
+
+def _add_column_if_missing(conn: sqlite3.Connection, table: str, column: str, col_type: str) -> None:
+    """Add a column to an existing table if it doesn't already exist."""
+    existing = {row[1] for row in conn.execute(f"PRAGMA table_info({table})")}
+    if column not in existing:
+        conn.execute(f"ALTER TABLE {table} ADD COLUMN {column} {col_type}")
 
 
 if __name__ == "__main__":

@@ -1,12 +1,14 @@
 # Core framework
 crewai>=0.80.0
 crewai-tools>=0.17.0
+litellm>=1.0.0            # required for Groq and other non-native LLM providers
 
 # LLM
 anthropic>=0.40.0
 
 # MCP
 mcp>=1.0.0
+mcpadapt>=0.1.0          # required by crewai-tools MCPServerAdapter
 
 # Data / DB
 pydantic>=2.0.0
