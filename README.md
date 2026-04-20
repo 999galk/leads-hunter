@@ -8,21 +8,27 @@ An end-to-end **GTM automation pipeline** that finds DataStax users on LinkedIn,
 
 ## Quickstart
 
+**Requires Python 3.10+** (CrewAI ≥0.80 drops older versions). Check with `python3 --version`; if it prints 3.9 or older, install 3.10+ via `brew install python@3.12` (macOS) or [python.org](https://www.python.org/downloads/) and use that binary explicitly in step 1 (e.g. `python3.12 -m venv .venv`).
+
 ```bash
 # 1. Install
-python3 -m venv .venv
-.venv/bin/pip install -r requirements.txt
+python3 -m venv .venv              # use python3.10+ — see note above
+source .venv/bin/activate          # macOS / Linux
+# .venv\Scripts\activate           # Windows (PowerShell: .venv\Scripts\Activate.ps1)
+pip install -r requirements.txt
 
 # 2. Configure
 cp .env.example .env
 # edit .env to add OPENAI_API_KEY and ANTHROPIC_API_KEY
 
 # 3. Run the UI
-.venv/bin/python app.py
+python app.py
 # → open http://localhost:7860
 ```
 
-Alternative headless run: `.venv/bin/python main.py`.
+Alternative headless run: `python main.py`.
+
+> Deactivate the venv later with `deactivate`. If you prefer not to activate, you can always invoke the interpreter directly via `.venv/bin/python` (or `.venv\Scripts\python.exe` on Windows).
 
 ---
 
