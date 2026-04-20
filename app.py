@@ -1367,6 +1367,12 @@ and logs a complete dry run — **no real messages are ever sent**.
 plus the Python safety-net upserts and dry-run logging). Progress streams into the **Runtime** tab
 and the Leads / Messages tabs fill progressively as each agent finishes.
 
+**Fresh run every time.** Because the POC works off a fixed mock profile set
+(`data/mock_profiles.json`), each run clears the `leads` and `messages` tables before
+kickoff — so what you see in the Leads / Messages tabs is always the current run, never
+an accumulation. `message_feedback` and the ChromaDB RAG store are preserved across
+runs so the self-improvement loop keeps learning.
+
 ---
 
 ## Framework: CrewAI
