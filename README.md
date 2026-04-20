@@ -145,4 +145,8 @@ See `.env.example`. Required keys:
 - `ANTHROPIC_API_KEY` — Copywriter
 - `DRY_RUN=true` — keep this on; the pipeline will refuse to send real messages
 
+Optional:
+- `SENDER_NAME`, `SENDER_TITLE` — identify the sender in generated email sign-offs (defaults: `"Your Name"`, `"Solutions Architect"`)
+- `CREWAI_TRACING_ENABLED=false` — disables CrewAI telemetry upload for local runs
+
 `DEV_MODE=true` uses smaller, cheaper models where possible. `DEV_MODE=false` switches the Copywriter to Claude Sonnet for submission-quality output.
