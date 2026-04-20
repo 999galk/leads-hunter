@@ -1,37 +1,47 @@
 {
-  "run_start": "2026-04-20 09:05:41 UTC",
-  "run_end": "2026-04-20 09:10:30 UTC",
-  "total_duration_s": 288.7,
+  "run_start": "2026-04-20 09:56:53 UTC",
+  "run_end": "2026-04-20 10:03:22 UTC",
+  "total_duration_s": 388.9,
   "phases": [
     {
       "phase": "LinkedIn Lead Hunter",
-      "started_at": "09:05:45",
-      "duration_s": 38.3
+      "started_at": "09:57:01",
+      "duration_s": 40.7
     },
     {
       "phase": "Lead Qualifier",
-      "started_at": "09:06:24",
-      "duration_s": 42.2
+      "started_at": "09:57:42",
+      "duration_s": 41.2
     },
     {
       "phase": "GTM Copywriter",
-      "started_at": "09:07:06",
-      "duration_s": 43.9
+      "started_at": "09:58:23",
+      "duration_s": 44.0
     },
     {
       "phase": "Outreach Quality Evaluator",
-      "started_at": "09:07:50",
-      "duration_s": 120.8
+      "started_at": "09:59:07",
+      "duration_s": 106.5
     },
     {
       "phase": "Retry 1 \u2014 GTM Copywriter",
-      "started_at": "09:09:51",
-      "duration_s": 8.3
+      "started_at": "10:00:54",
+      "duration_s": 13.1
     },
     {
       "phase": "Retry 1 \u2014 Outreach Quality Evaluator",
-      "started_at": "09:09:59",
-      "duration_s": 31.0
+      "started_at": "10:01:07",
+      "duration_s": 69.3
+    },
+    {
+      "phase": "Retry 2 \u2014 GTM Copywriter",
+      "started_at": "10:02:16",
+      "duration_s": 13.4
+    },
+    {
+      "phase": "Retry 2 \u2014 Outreach Quality Evaluator",
+      "started_at": "10:02:30",
+      "duration_s": 51.7
     }
   ]
 }
