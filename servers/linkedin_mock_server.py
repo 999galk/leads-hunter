@@ -46,6 +46,10 @@ _DEFAULT_KEYWORDS = [
     "datastax", "datastax enterprise", "dse",
     "astra db", "astradb",
     "cql",
+    # Tier-2 post keyword — admits weak leads whose only signal is a migration
+    # mention in recent_posts (e.g. p011 Tom, p012 Kevin). The Qualifier will
+    # score them well under 60 and mark them SKIPPED.
+    "migrat",
 ]
 
 mcp = FastMCP("linkedin-server")
@@ -80,6 +84,8 @@ def normalize(raw: dict) -> dict:
     # and employment history instead.
     recent_posts = raw.get("recent_posts") or []
 
+    certifications = raw.get("certifications") or []
+
     seniority = (
         _SENIORITY_MAP.get((raw.get("seniority") or "").lower())
         or _derive_seniority(raw.get("title") or "")
@@ -91,6 +97,41 @@ def normalize(raw: dict) -> dict:
     # In production this field comes from Apollo's 'technologies_used' filter instead
     # of this static lookup — no code change needed downstream.
     known_client = company_name.lower().strip() in _KNOWN_DATASTAX_CLIENTS
+
+    # ---------------------------------------------------------------------------
+    # Pre-compute signals — deterministic lookups, not LLM work.
+    # The Hunter uses these directly; signal scoring is factual, not inferential.
+    # ---------------------------------------------------------------------------
+    _TIER1_TECH_KEYWORDS = {
+        "cassandra", "apache cassandra",
+        "datastax", "datastax enterprise", "dse",
+        "astra db", "astradb",
+        "cql",
+    }
+    _TIER2_POST_KEYWORDS = {"#datastax", "#cassandra", "#astradb", "migrat"}
+
+    tier1_signals: list[str] = []
+    tier2_signals: list[str] = []
+
+    for tech in technologies:
+        if any(kw in tech.lower() for kw in _TIER1_TECH_KEYWORDS):
+            tier1_signals.append(f"Technology: {tech}")
+
+    for exp in raw_experience:
+        if any(kw in exp.lower() for kw in _TIER1_TECH_KEYWORDS):
+            tier1_signals.append("Experience: DataStax/Cassandra mentioned in employment history")
+            break  # one signal per experience section is enough
+
+    for cert in certifications:
+        if "datastax" in str(cert).lower():
+            tier1_signals.append(f"Certification: {cert}")
+
+    if known_client:
+        tier1_signals.append(f"Works at confirmed DataStax client: {company_name}")
+
+    for post in recent_posts:
+        if any(kw in post.lower() for kw in _TIER2_POST_KEYWORDS):
+            tier2_signals.append(f"LinkedIn post: {post[:120]}")
 
     return {
         "id":                    raw.get("id", ""),
@@ -106,8 +147,13 @@ def normalize(raw: dict) -> dict:
         "technologies":          technologies,
         "raw_experience":        raw_experience,
         "recent_posts":          recent_posts,
-        "certifications":        raw.get("certifications") or [],
+        "certifications":        certifications,
         "known_datastax_client": known_client,
+        # Pre-computed signals — Hunter passes these through directly
+        "tier1_signals":         tier1_signals,
+        "tier2_signals":         tier2_signals,
+        # Ready-to-embed SQL-safe string — Hunter uses this verbatim, no formatting needed
+        "signals_str":           ",".join(tier1_signals + tier2_signals),
     }
 
 

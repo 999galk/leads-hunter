@@ -1,0 +1,200 @@
+
+========================================================================
+[DRY RUN]  2026-04-20 09:10:30
+Lead:      Sarah Chen
+Type:      linkedin_invite
+========================================================================
+Your post about re-evaluating DataStax dependency caught my attention — with IBM's acquisition reshaping the roadmap, a lot of Netflix-scale teams are exploring what's next. Would love to connect.
+
+========================================================================
+[DRY RUN]  2026-04-20 09:10:30
+Lead:      Sarah Chen
+Type:      followup_email
+========================================================================
+Subject: Cassandra alternatives post-IBM acquisition
+
+Sarah, your LinkedIn post about re-evaluating DataStax dependency resonated with what we're seeing across streaming companies right now.
+
+IBM's first renewal cycle has brought 30-40% price increases for most DataStax Enterprise customers. More importantly, the roadmap shift toward IBM Cloud exclusivity has raised questions about long-term open-source commitment.
+
+A handful of streaming teams at your scale have moved to ScyllaDB in the last 6 months. The migration is technically straightforward — CQL-compatible, same drivers, no application changes — and the cost reduction is meaningful. Booking.com, for example, moved their workload from 45 Cassandra nodes to 12 ScyllaDB nodes with lower p99 latency.
+
+Worth 20 minutes to see how the numbers compare to your current setup?
+
+Gal Kol
+Solutions Architect, ScyllaDB
+
+========================================================================
+[DRY RUN]  2026-04-20 09:10:30
+Lead:      Marcus Williams
+Type:      linkedin_invite
+========================================================================
+Stripe's DataStax Enterprise setup at your scale is impressive. Curious what your p99 tail latency looks like under payment burst traffic — teams in similar positions have cut node count by 60%+ without touching application code. Worth a quick chat?
+
+========================================================================
+[DRY RUN]  2026-04-20 09:10:30
+Lead:      Marcus Williams
+Type:      followup_email
+========================================================================
+Subject: Stripe's Cassandra node count — a performance comparison
+
+Marcus, I've been working with fintech teams running DataStax Enterprise at similar scale and throughput to what Stripe handles.
+
+The pattern is consistent: same CQL queries, same drivers, same SSTables — but 60-70% fewer nodes and p99 latency cut roughly in half under burst traffic. No rewrite. The application doesn't know it moved.
+
+For a payments platform, that translates to lower infrastructure cost and more headroom during peak load. Discord moved 100 billion messages from Cassandra to ScyllaDB and shrunk their cluster from 177 nodes to 72 while cutting p99 read latency by 40%.
+
+If you're ever stress-testing alternatives or want to see the benchmark data side by side, I'm happy to share. No pitch deck — just the numbers.
+
+Gal Kol
+Solutions Architect, ScyllaDB
+
+========================================================================
+[DRY RUN]  2026-04-20 09:10:30
+Lead:      David Park
+Type:      linkedin_invite
+========================================================================
+Your DataStax Academy certification and Booking.com's scale tell me you're running Cassandra at serious throughput. What's your p99 latency under peak load? Teams like yours have cut node count by 60%+ without touching code. Worth exploring?
+
+========================================================================
+[DRY RUN]  2026-04-20 09:10:30
+Lead:      David Park
+Type:      followup_email
+========================================================================
+Subject: Booking.com's Cassandra infrastructure — a node count comparison
+
+David, I saw your DataStax Academy certification and your work scaling Cassandra at Booking.com's scale.
+
+We've been working with travel and e-commerce teams running similar workloads who've moved to ScyllaDB. The pattern is consistent: same CQL queries, same drivers, same SSTables — but 60-70% fewer nodes and p99 latency cut roughly in half under burst traffic.
+
+No rewrite. The application doesn't know it moved. For a platform handling Booking.com's reservation volume, that's meaningful cost savings and operational headroom.
+
+If you're ever stress-testing alternatives or want to see the benchmark data side by side, happy to share. No pitch deck — just the numbers.
+
+Gal Kol
+Solutions Architect, ScyllaDB
+
+========================================================================
+[DRY RUN]  2026-04-20 09:10:30
+Lead:      Sofia Martinez
+Type:      linkedin_invite
+========================================================================
+Your post about Cassandra being the biggest cost center in Spotify's infra — that's the exact problem we're solving. Teams at your scale have cut infrastructure spend by 60% without touching application code. Worth 20 minutes?
+
+========================================================================
+[DRY RUN]  2026-04-20 09:10:30
+Lead:      Sofia Martinez
+Type:      followup_email
+========================================================================
+Subject: Spotify's Cassandra cost — what other streaming teams are doing
+
+Sofia, your post about Cassandra becoming the single biggest cost center in Spotify's infrastructure is something we're hearing from every major streaming platform right now.
+
+IBM's post-acquisition pricing has made it worse for most teams. A handful of streaming companies have moved to ScyllaDB in the last 6 months specifically because the vendor risk calculus changed. The migration is technically straightforward — CQL-compatible, same drivers, no application changes — and the cost reduction is meaningful at your scale.
+
+Booking.com moved their workload from 45 Cassandra nodes to 12 ScyllaDB nodes with lower p99 latency and a 60% reduction in cloud spend. Discord shrunk their cluster from 177 nodes to 72 while cutting p99 read latency by 40%.
+
+Worth 20 minutes to see how the numbers compare to your current setup?
+
+Gal Kol
+Solutions Architect, ScyllaDB
+
+========================================================================
+[DRY RUN]  2026-04-20 09:10:30
+Lead:      Ryan OBrien
+Type:      linkedin_invite
+========================================================================
+Board questions about long-term vendor strategy on DataStax are coming up more often at Capital One right now — you're not alone. The open-source alternative with no IBM dependency is a conversation more engineering leaders are having. Happy to share?
+
+========================================================================
+[DRY RUN]  2026-04-20 09:10:30
+Lead:      Ryan OBrien
+Type:      followup_email
+========================================================================
+Subject: Vendor strategy on your DataStax stack — the open-source option
+
+Ryan, board questions about long-term vendor exposure on a DataStax-backed stack are coming up more often since the IBM acquisition. It's a reasonable thing to pressure-test.
+
+ScyllaDB is Apache 2.0 licensed, community-governed, and not owned by a cloud provider. For teams running real-time transaction processing at scale, that's become a meaningful part of the evaluation — not just the performance numbers.
+
+The technical migration from DataStax to ScyllaDB is straightforward: CQL-compatible, same drivers, existing data files transfer without conversion. The operational risk is low.
+
+If it's useful context for your vendor review, I can put together a one-pager on how other fintech teams have framed this decision. No commitment needed.
+
+Gal Kol
+Solutions Architect, ScyllaDB
+
+========================================================================
+[DRY RUN]  2026-04-20 09:10:30
+Lead:      Lisa Zhang
+Type:      linkedin_invite
+========================================================================
+Saw your post about migrating off DataStax Enterprise — the IBM acquisition changed the vendor risk calculus for a lot of teams. Happy to share what we're seeing from companies mid-migration. Would love to connect.
+
+========================================================================
+[DRY RUN]  2026-04-20 09:10:30
+Lead:      Lisa Zhang
+Type:      followup_email
+========================================================================
+Subject: DataStax migration — what other enterprises are doing
+
+Lisa, your post about Walmart Labs' migration off DataStax Enterprise caught my attention. The IBM acquisition has fundamentally changed how enterprises think about vendor risk on their Cassandra stack.
+
+ScyllaDB is Apache 2.0 licensed, community-governed, and not owned by a cloud provider. For teams at Walmart's scale running mission-critical infrastructure, that's become a meaningful part of the evaluation.
+
+The technical migration is straightforward: CQL-compatible, same drivers, existing SSTables transfer without conversion. We've seen large enterprises complete migrations with minimal operational disruption.
+
+Since you're already mid-migration, I'd be curious to hear what you're learning. If it's useful to compare notes with other teams making similar moves, I'm happy to facilitate that conversation.
+
+Gal Kol
+Solutions Architect, ScyllaDB
+
+========================================================================
+[DRY RUN]  2026-04-20 09:10:30
+Lead:      Priya Patel
+Type:      linkedin_invite
+========================================================================
+Priya, your player state architecture on Astra DB is well designed. With IBM reshaping DataStax's roadmap, more gaming teams are exploring Cassandra-compatible alternatives. The migration path is surprisingly clean. Would love to connect.
+
+========================================================================
+[DRY RUN]  2026-04-20 09:10:30
+Lead:      Priya Patel
+Type:      followup_email
+========================================================================
+Subject: Player state migration — what zero application changes means
+
+Priya, your matchmaking and player state setup on Astra DB across multiple regions looks well architected for low-latency gaming.
+
+Migrating a stack like that usually feels risky — which is why most teams don't, even when the economics argue for it. ScyllaDB is fully CQL-compatible: same query syntax, same DataStax drivers, same SSTable format for existing data. We've seen gaming teams complete full migrations in a single sprint with no application code changes.
+
+The main thing that moves is the node count — usually down by 3-4x — and p99 latency under concurrent game session load improves significantly.
+
+If a low-friction evaluation is interesting, I can walk you through exactly what it looks like. Takes about 20 minutes.
+
+Gal Kol
+Solutions Architect, ScyllaDB
+
+========================================================================
+[DRY RUN]  2026-04-20 09:10:30
+Lead:      Aisha Johnson
+Type:      linkedin_invite
+========================================================================
+Aisha, DoorDash's real-time logistics on DataStax is impressive scale. IBM's acquisition is prompting a lot of engineering leaders to revisit their vendor strategy. The open-source alternative is worth a conversation. Would love to connect.
+
+========================================================================
+[DRY RUN]  2026-04-20 09:10:30
+Lead:      Aisha Johnson
+Type:      followup_email
+========================================================================
+Subject: Vendor strategy on your DataStax stack — the open-source option
+
+Aisha, board questions about long-term vendor exposure on a DataStax-backed stack are coming up more often since the IBM acquisition. It's a reasonable thing to pressure-test.
+
+ScyllaDB is Apache 2.0 licensed, community-governed, and not owned by a cloud provider. For teams running real-time logistics at scale, that's become a meaningful part of the evaluation — not just the performance numbers.
+
+The technical migration from DataStax to ScyllaDB is straightforward: CQL-compatible, same drivers, existing data files transfer without conversion. The operational risk is low.
+
+If it's useful context for your vendor review, I can put together a one-pager on how other logistics teams have framed this decision. No commitment needed.
+
+Gal Kol
+Solutions Architect, ScyllaDB

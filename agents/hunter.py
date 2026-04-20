@@ -1,7 +1,7 @@
 from crewai import Agent
 
 
-def create_hunter_agent(llm, tools: list) -> Agent:
+def create_hunter_agent(llm, linkedin_tools: list, sqlite_tools: list) -> Agent:
     """
     The Hunter fetches profiles from the LinkedIn MCP server and identifies
     which DataStax signals are present on each profile.
@@ -11,8 +11,9 @@ def create_hunter_agent(llm, tools: list) -> Agent:
     Its only job: fetch + annotate signals.
 
     Args:
-        llm:   LLM instance from config.py
-        tools: MCP tools list from MCPServerAdapter (passed in by crew.py)
+        llm:           LLM instance from config.py
+        linkedin_tools: MCP tools from LinkedIn mock server (search_linkedin_profiles)
+        sqlite_tools:   MCP tools from mcp-server-sqlite (write_query, read_query)
     """
     return Agent(
         role="LinkedIn Lead Hunter",
@@ -42,7 +43,7 @@ def create_hunter_agent(llm, tools: list) -> Agent:
             "You are thorough and precise. You do not skip profiles and you do not "
             "invent signals that aren't there."
         ),
-        tools=tools,
+        tools=linkedin_tools + sqlite_tools,
         llm=llm,
         verbose=True,
         allow_delegation=False,

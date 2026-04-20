@@ -3,7 +3,7 @@ from tools.search_recent_news import search_recent_news
 from tools.get_successful_templates import get_successful_templates
 
 
-def create_copywriter_agent(llm) -> Agent:
+def create_copywriter_agent(llm, sqlite_tools: list) -> Agent:
     """
     The Copywriter writes a personalised LinkedIn invite (<300 chars) and a
     follow-up email (100-200 words) for each QUALIFIED lead.
@@ -59,7 +59,7 @@ def create_copywriter_agent(llm) -> Agent:
             "  - Weave news findings in naturally — never quote them verbatim.\n"
             "  - You are writing to a technical professional. Don't over-explain ScyllaDB basics."
         ),
-        tools=[search_recent_news, get_successful_templates],
+        tools=[search_recent_news, get_successful_templates] + sqlite_tools,
         llm=llm,
         verbose=True,
         allow_delegation=False,

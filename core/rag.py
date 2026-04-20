@@ -7,8 +7,8 @@ examples before writing new messages.
 
 Self-improvement loop:
   1. Copywriter calls get_successful_templates — retrieves top examples.
-  2. Messages are written, evaluated, and logged (Reporter / Step 9).
-  3. ingest_feedback.py (Step 10) reads message_feedback rows and calls
+  2. Messages are written and evaluated by the pipeline.
+  3. ingest_feedback.py reads message_feedback rows and calls
      add_message() here to grow the store over time.
 
 On first run the collection is empty — init_rag() seeds it automatically
@@ -21,13 +21,15 @@ import os
 import chromadb
 from chromadb.utils.embedding_functions import DefaultEmbeddingFunction
 
-_ROOT           = os.path.dirname(os.path.abspath(__file__))
+_ROOT           = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 _CHROMA_PATH    = os.path.join(_ROOT, "data", "chroma_db")
 _SEED_PATH      = os.path.join(_ROOT, "data", "seed_templates.json")
 _COLLECTION     = "successful_messages"
 
 # Response types treated as "high-performing" for retrieval
 _POSITIVE_RESPONSES = {"replied", "accepted"}
+
+_initialized = False  # print only on first init call per process
 
 
 def _get_collection() -> chromadb.Collection:
@@ -42,14 +44,17 @@ def _get_collection() -> chromadb.Collection:
 def init_rag() -> None:
     """
     Initialise ChromaDB. Seeds the collection from seed_templates.json
-    if it is empty. Safe to call on every startup.
+    if it is empty. Safe to call on every startup — prints only once per process.
     """
+    global _initialized
     collection = _get_collection()
     if collection.count() == 0:
         _seed(collection)
         print(f"[rag] Seeded {collection.count()} templates into ChromaDB.")
-    else:
-        print(f"[rag] ChromaDB ready — {collection.count()} templates loaded.")
+        _initialized = True
+    elif not _initialized:
+        print(f"[rag] ChromaDB ready — {collection.count()} historical successful message templates loaded.")
+        _initialized = True
 
 
 def _seed(collection: chromadb.Collection) -> None:

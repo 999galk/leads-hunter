@@ -14,9 +14,8 @@ Usage:
 """
 
 import argparse
-import sys
 from database import init_db, get_connection
-from rag import init_rag, add_message, _get_collection
+from core.rag import init_rag, add_message, _get_collection
 
 try:
     from rich.console import Console

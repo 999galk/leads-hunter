@@ -6,7 +6,7 @@ before writing new messages.
 """
 
 from crewai.tools import tool
-from rag import query_templates
+from core.rag import query_templates
 
 
 @tool("get_successful_templates")

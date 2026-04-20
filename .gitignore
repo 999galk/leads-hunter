@@ -1,11 +1,11 @@
 # Environment
 .env
 
+# Noisy debug log (regenerated each run); keep dry_run.log + timing_report.json tracked
+output/debug_run.log
+
 # Database
 data/*.db
-
-# Output / dry run logs
-output/
 
 # Python
 __pycache__/
@@ -22,3 +22,7 @@ build/
 
 # OS
 .DS_Store
+
+# Private working notes
+PROJECT_CONTEXT.md
+CLAUDE.md

@@ -23,6 +23,7 @@ def validate_lead(company: str) -> dict:
     """
     normalised = company.lower().strip()
 
+    # Exact match
     if normalised in _BLOCKED_EMPLOYERS:
         return {
             "blocked": True,
@@ -30,13 +31,16 @@ def validate_lead(company: str) -> dict:
                       "We never reach out to DataStax or IBM employees.",
         }
 
-    # Partial match — catches variants like "IBM Cloud", "DataStax Inc."
-    for blocked in _BLOCKED_EMPLOYERS:
-        if blocked in normalised:
-            return {
-                "blocked": True,
-                "reason": f"Current employer '{company}' contains a blocked entity ('{blocked}'). "
-                          "Flagged as possible DataStax/IBM employee.",
-            }
+    # Partial match — only on short company names (≤30 chars) to avoid false
+    # positives where "datastax" appears in a signal description rather than a
+    # real company name (e.g. "Confirmed DataStax Client: Acme Corp").
+    if len(normalised) <= 30:
+        for blocked in _BLOCKED_EMPLOYERS:
+            if blocked in normalised:
+                return {
+                    "blocked": True,
+                    "reason": f"Current employer '{company}' contains a blocked entity "
+                              f"('{blocked}'). Flagged as possible DataStax/IBM employee.",
+                }
 
     return {"blocked": False, "reason": ""}

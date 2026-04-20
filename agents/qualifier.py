@@ -4,7 +4,7 @@ from tools.calculate_lead_score import calculate_lead_score
 from tools.get_company_profile import get_company_profile
 
 
-def create_qualifier_agent(llm) -> Agent:
+def create_qualifier_agent(llm, sqlite_tools: list) -> Agent:
     """
     The Qualifier scores each profile from the Hunter, applies the safety-net
     guardrail, and classifies each lead as QUALIFIED / BLOCKED / SKIPPED.
@@ -43,7 +43,7 @@ def create_qualifier_agent(llm) -> Agent:
             "still gets a fair score. You document your reasoning clearly so the "
             "Copywriter can use it to personalise messages."
         ),
-        tools=[validate_lead, calculate_lead_score, get_company_profile],
+        tools=[validate_lead, calculate_lead_score, get_company_profile] + sqlite_tools,
         llm=llm,
         verbose=True,
         allow_delegation=False,

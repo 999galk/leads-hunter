@@ -83,12 +83,39 @@ def init_db() -> None:
         _add_column_if_missing(conn, "leads",    "industry",  "TEXT")
         _add_column_if_missing(conn, "leads",    "seniority", "TEXT")
 
+        # Deduplication guard — silently drop duplicate writes from agent retries.
+        # Step 1: remove any existing duplicates so the unique index can be created.
+        # Step 2: create the index (IF NOT EXISTS makes both steps idempotent).
+        conn.executescript("""
+            DELETE FROM messages WHERE id NOT IN (
+                SELECT MIN(id) FROM messages GROUP BY lead_id, type
+            );
+            DELETE FROM leads WHERE id NOT IN (
+                SELECT MIN(id) FROM leads GROUP BY name, company
+            );
+            CREATE UNIQUE INDEX IF NOT EXISTS ux_leads_name_company
+                ON leads(name, company);
+            CREATE UNIQUE INDEX IF NOT EXISTS ux_messages_lead_type
+                ON messages(lead_id, type);
+        """)
+
 
 def _add_column_if_missing(conn: sqlite3.Connection, table: str, column: str, col_type: str) -> None:
-    """Add a column to an existing table if it doesn't already exist."""
+    """Add a column to an existing table if it doesn't already exist.
+
+    Note: table/column/col_type are hardcoded constants from callers above — not user input —
+    so f-string interpolation into DDL is safe (SQLite doesn't bind identifiers as parameters).
+    """
     existing = {row[1] for row in conn.execute(f"PRAGMA table_info({table})")}
     if column not in existing:
         conn.execute(f"ALTER TABLE {table} ADD COLUMN {column} {col_type}")
+
+
+def clear_run_data() -> None:
+    """Delete all leads and messages before each run so stale rows never accumulate."""
+    with get_connection() as conn:
+        conn.execute("DELETE FROM messages")
+        conn.execute("DELETE FROM leads")
 
 
 if __name__ == "__main__":

@@ -14,7 +14,20 @@
       "Bash(timeout 3 .venv/bin/python mcp/linkedin_mock_server.py)",
       "Bash(gtimeout 3 .venv/bin/python mcp/linkedin_mock_server.py)",
       "Bash(echo \"exit: $?\")",
-      "Bash(.venv/bin/python -c ' *)"
+      "Bash(.venv/bin/python -c ' *)",
+      "Bash(uvx mcp-server-sqlite *)",
+      "Bash(.venv/bin/python ingest_feedback.py)",
+      "Bash(.venv/bin/python ingest_feedback.py --status)",
+      "Bash(grep -n \": list[^[]\" /Users/gal.kol/Documents/leads-hunter/tools/*.py)",
+      "Bash(git add *)",
+      "Bash(git commit -m ' *)",
+      "Bash(.venv/bin/python -c \"import app; print\\('app.py imports OK'\\)\")",
+      "Bash(.venv/bin/python app.py)",
+      "Bash(curl -s http://localhost:7860)",
+      "Bash(pkill -f \"python app.py\")",
+      "Bash(.venv/bin/python -c \"import app; app.build_ui\\(\\); print\\('OK'\\)\")",
+      "Bash(.venv/bin/python -c \"import app; print\\('OK'\\)\")",
+      "Bash(.venv/bin/python -c \"import app, tasks, config; print\\('All imports OK'\\)\")"
     ]
   }
 }

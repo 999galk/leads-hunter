@@ -9,8 +9,6 @@ Mock fallback: curated realistic stories used when no key is present.
 """
 
 import os
-import json
-from datetime import datetime
 import requests
 from crewai.tools import tool
 

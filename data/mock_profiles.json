@@ -154,7 +154,7 @@
   {
     "id": "p006",
     "first_name": "Ryan",
-    "last_name": "O'Brien",
+    "last_name": "OBrien",
     "title": "Senior Software Engineer",
     "seniority": "senior",
     "headline": "Senior SWE @ Capital One | Fraud detection, DataStax Enterprise, real-time systems",
@@ -208,7 +208,7 @@
     ],
     "certifications": [],
     "recent_posts": [
-      "We're mid-migration off DataStax Enterprise — the IBM acquisition changed our vendor risk calculus. Happy to share learnings."
+      "We are mid-migration off DataStax Enterprise — the IBM acquisition changed our vendor risk calculus. Happy to share learnings."
     ]
   },
   {
@@ -239,7 +239,7 @@
     ],
     "certifications": [],
     "recent_posts": [
-      "Our real-time order routing stack runs on DataStax. With the IBM acquisition I'm getting questions from the board about long-term vendor strategy."
+      "Our real-time order routing stack runs on DataStax. With the IBM acquisition I am getting questions from the board about long-term vendor strategy."
     ]
   },
   {
@@ -319,7 +319,7 @@
       "industry": "SaaS Startup",
       "num_employees": 25
     },
-    "technologies": ["Python", "Django", "PostgreSQL"],
+    "technologies": ["Python", "Django", "PostgreSQL","DB"],
     "employment_history": [
       {
         "company_name": "TechStart Inc.",
@@ -329,7 +329,9 @@
       }
     ],
     "certifications": [],
-    "recent_posts": []
+    "recent_posts": [
+      "First time leading a database migration at work — moving some legacy tables from MySQL to PostgreSQL. Any tips from folks who have done this?"
+    ]
   },
   {
     "id": "p012",
@@ -348,7 +350,7 @@
       "industry": "Fintech",
       "num_employees": 120
     },
-    "technologies": ["PostgreSQL", "Redis", "MySQL", "Node.js"],
+    "technologies": ["DB","PostgreSQL", "Redis", "MySQL", "Node.js"],
     "employment_history": [
       {
         "company_name": "FinanceFlow",
@@ -358,6 +360,8 @@
       }
     ],
     "certifications": [],
-    "recent_posts": []
+    "recent_posts": [
+      "Mid-migration from our monolith to microservices and the hardest part has been splitting the shared database. Anyone else been through this?"
+    ]
   }
 ]

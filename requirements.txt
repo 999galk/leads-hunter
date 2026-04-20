@@ -1,7 +1,7 @@
 # Core framework
 crewai>=0.80.0
 crewai-tools>=0.17.0
-litellm>=1.0.0            # required for Groq and other non-native LLM providers
+litellm>=1.0.0            # CrewAI routes all LLM completions through LiteLLM
 
 # LLM
 anthropic>=0.40.0
@@ -12,7 +12,9 @@ mcpadapt>=0.1.0          # required by crewai-tools MCPServerAdapter
 
 # Data / DB
 pydantic>=2.0.0
+chromadb>=0.5.0          # Self-improvement RAG store (rag.py); default ONNX embeddings
 
 # Utilities
 python-dotenv>=1.0.0
 rich>=13.0.0
+gradio>=4.0.0

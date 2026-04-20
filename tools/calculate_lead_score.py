@@ -76,6 +76,15 @@ def calculate_lead_score(
     Returns:
         {"base_score": int, "breakdown": dict, "notes": str}
     """
+    # Full args marker — CrewAI truncates its own "Args:" line in stdout,
+    # so the Runtime log parser relies on this to show every argument.
+    print(
+        f"[TOOL_ARGS] calculate_lead_score | seniority={seniority} | "
+        f"industry={industry} | size={company_size} | "
+        f"tier1={len(tier1_signals)} | tier2={len(tier2_signals)}",
+        flush=True,
+    )
+
     t1 = min(len(tier1_signals) * _TIER1_PER_SIGNAL, _TIER1_MAX)
     t2 = min(len(tier2_signals) * _TIER2_PER_SIGNAL, _TIER2_MAX)
     seniority_score = _SENIORITY_SCORES.get(seniority.lower(), _SENIORITY_SCORES["mid"])
